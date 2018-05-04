@@ -1,0 +1,8 @@
+zuul:
+  routes:
+    order-service:
+      path: /order/**
+      serviceId: order-service
+    menu-service:
+      path: /menu/**
+      serviceId: menu-service
