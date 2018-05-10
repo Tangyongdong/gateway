@@ -6,3 +6,6 @@ zuul:
     menu-service:
       path: /menu/**
       serviceId: menu-service
+    user-service:
+      path: /user/**
+      serviceId: user-service

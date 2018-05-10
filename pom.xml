@@ -22,6 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<user-api.version>1.0.0-SNAPSHOT</user-api.version>
 		<base.version>1.0.0-SNAPSHOT</base.version>
 		<lombok.version>1.16.18</lombok.version>
 	</properties>
@@ -31,6 +32,12 @@
 			<groupId>com.tangyongdong.sale</groupId>
 			<artifactId>base</artifactId>
 			<version>${base.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.tangyongdong.sale</groupId>
+			<artifactId>user-api</artifactId>
+			<version>${user-api.version}</version>
 		</dependency>
 
 		<dependency>

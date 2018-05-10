@@ -1,10 +1,15 @@
 package com.tangyongdong.sale.gateway.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
-import com.tangyongdong.sale.base.exception.BusinessException;
-import com.tangyongdong.sale.gateway.config.BusinessErrorCode;
+import com.tangyongdong.sale.base.response.CommonResponse;
+import com.tangyongdong.sale.gateway.config.GatewayConstant;
+import com.tangyongdong.sale.user.api.UserApi;
+import com.tangyongdong.sale.user.request.AccessTokenAuthRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,7 +18,12 @@ import javax.servlet.http.HttpServletRequest;
  * @create 2018-05-04 10:21
  */
 @Slf4j
-public class UserFilter extends ZuulFilter{
+@Component
+public class UserFilter extends ZuulFilter {
+
+    @Autowired
+    private UserApi userApi;
+
     @Override
     public String filterType() {
         return "pre";
@@ -26,18 +36,32 @@ public class UserFilter extends ZuulFilter{
 
     @Override
     public boolean shouldFilter() {
-        return false;
+        HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
+        if(GatewayConstant.LOGIN_URI.equalsIgnoreCase(request.getRequestURI())){
+            return false;
+        }
+        return true;
     }
 
     @Override
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-        Object accessToken = request.getParameter("token");
-        if(accessToken == null){
-            log.info("token is empty");
-            throw new BusinessException(BusinessErrorCode.USER_NO_LOGIN);
-            //TODO 验证accessToken是否有效
+        String userToken =request.getHeader("userToken");
+        String accessToken = request.getHeader("accessToken");
+        if (accessToken == null || userToken == null) {
+            log.info("token is empty,userToken:{},accessToken:{}",userToken,accessToken);
+            ctx.setResponseStatusCode(101);
+            ctx.setSendZuulResponse(false);
+            ctx.setResponseBody("用户认证校验参数错误");
+        }
+        AccessTokenAuthRequest accessTokenAuthRequest = AccessTokenAuthRequest.builder().userToken(userToken).accessToken(accessToken).build();
+        log.info("accessTokenAuthRequest request : {}",JSON.toJSONString(accessTokenAuthRequest));
+        CommonResponse<Boolean> response = userApi.accessTokenAuth(accessTokenAuthRequest);
+        if(!response.isSuccess() || !response.getData()){
+            ctx.setResponseStatusCode(102);
+            ctx.setSendZuulResponse(false);
+            ctx.setResponseBody("用户认证校验未通过");
         }
         return null;
     }
