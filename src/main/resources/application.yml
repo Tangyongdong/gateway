@@ -1,11 +1,8 @@
 zuul:
   routes:
-    order-service:
-      path: /order/**
-      serviceId: order-service
-    menu-service:
-      path: /menu/**
-      serviceId: menu-service
     user-service:
       path: /user/**
       serviceId: user-service
+    rabbit-client:
+      path: /rabbitc/**
+      serviceId: rabbit-client
