@@ -1,6 +1,6 @@
-package com.tangyongdong.sale.gateway.config;
+package com.tangyongdong.play.gateway.config;
 
-import com.tangyongdong.sale.base.exception.ErrorCode;
+import com.tangyongdong.base.common.exception.ErrorCode;
 
 /**
  * @author tangyongdong

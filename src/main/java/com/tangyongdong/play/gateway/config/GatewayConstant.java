@@ -1,4 +1,4 @@
-package com.tangyongdong.sale.gateway.config;
+package com.tangyongdong.play.gateway.config;
 
 /**
  * @author tangyongdong

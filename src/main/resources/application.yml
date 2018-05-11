@@ -4,5 +4,5 @@ zuul:
       path: /user/**
       serviceId: user-service
     rabbit-client:
-      path: /rabbitc/**
+      path: /rabbit/**
       serviceId: rabbit-client

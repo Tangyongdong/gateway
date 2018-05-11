@@ -1,12 +1,12 @@
-package com.tangyongdong.sale.gateway.filter;
+package com.tangyongdong.play.gateway.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
-import com.tangyongdong.sale.base.response.CommonResponse;
-import com.tangyongdong.sale.gateway.config.GatewayConstant;
-import com.tangyongdong.sale.user.api.UserApi;
-import com.tangyongdong.sale.user.request.AccessTokenAuthRequest;
+import com.tangyongdong.base.common.response.CommonResponse;
+import com.tangyongdong.play.gateway.config.GatewayConstant;
+import com.tangyongdong.play.user.api.UserApi;
+import com.tangyongdong.play.user.request.AccessTokenAuthRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
